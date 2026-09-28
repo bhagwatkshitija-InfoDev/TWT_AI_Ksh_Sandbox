@@ -1,0 +1,96 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.pot
+.pytest_cache/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+htmlcov/
+.tox/
+.hypothesis/
+
+# Documentation
+docs/_build/
+
+# Logs (mounted volume)
+logs/
+
+# Data files (mounted volume)
+data/
+
+# Reports (mounted volume)
+reports/
+
+# Storage (mounted volume)
+storage/
+
+# Development
+.env.local
+.env.*.local
+
+# Node modules (if any)
+node_modules/
+npm-debug.log
+
+# Misc
+*.md
+LICENSE
+CLAUDE.md
+.claude/
+TWT_AI_Course/
+TWTAI-Batch3/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+Jenkinsfile
+
+# Docker
+docker-compose.override.yml
+Dockerfile.dev

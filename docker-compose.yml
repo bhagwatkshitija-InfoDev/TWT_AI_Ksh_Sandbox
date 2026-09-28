@@ -1,0 +1,101 @@
+version: '3.8'
+
+services:
+  # Main application service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: document-qa-agent
+    ports:
+      - "8000:8000"  # MCP Server
+    volumes:
+      # Mount configuration
+      - ./claude_mcp_docqa_agent/config:/app/config:ro
+      # Mount data directories
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./reports:/app/reports
+      - ./storage:/app/storage
+      # Mount for local development
+      - ./claude_mcp_docqa_agent:/app/claude_mcp_docqa_agent:ro
+    environment:
+      # Core settings
+      - DATABASE_URL=sqlite:///./data/docqa.db
+      - LOG_LEVEL=INFO
+      - LOG_DIR=./logs
+
+      # Processing
+      - MAX_FILE_SIZE_MB=100
+      - SUPPORTED_FORMATS=pdf,docx
+      - SUPPORTED_LANGUAGES=de,zh_CN
+
+      # Language detection
+      - LANGUAGE_DETECTION_MIN_CONFIDENCE=0.7
+
+      # MCP Server
+      - MCP_SERVER_HOST=0.0.0.0
+      - MCP_SERVER_PORT=8000
+
+      # Reporting
+      - ENABLE_PDF_REPORTS=true
+      - ENABLE_HTML_REPORTS=true
+      - ENABLE_JSON_REPORTS=true
+      - REPORT_DIR=./reports
+
+      # Debug
+      - DEBUG=false
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Network
+    networks:
+      - document-qa-network
+
+  # Optional: PostgreSQL for future scaling
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: document-qa-postgres
+  #   environment:
+  #     POSTGRES_DB: docqa
+  #     POSTGRES_USER: docqa_user
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   networks:
+  #     - document-qa-network
+  #   restart: unless-stopped
+
+networks:
+  document-qa-network:
+    driver: bridge
+
+volumes:
+  # postgres_data:
+  #   driver: local

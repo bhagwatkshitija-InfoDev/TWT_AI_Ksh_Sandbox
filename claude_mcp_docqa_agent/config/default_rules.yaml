@@ -1,0 +1,130 @@
+# Default Style Rules for Document QA
+
+formatting_rules:
+  - id: font_consistency
+    name: Font Consistency
+    scope: formatting
+    severity: warning
+    enabled: true
+    description: Check for consistent font usage throughout document
+    rule_definition:
+      max_unique_fonts: 3
+      required_fonts: []
+    examples:
+      - violation: "Document uses 10 different fonts"
+        correction: "Limit to 3 fonts maximum"
+
+  - id: heading_hierarchy
+    name: Heading Hierarchy
+    scope: structure
+    severity: warning
+    enabled: true
+    description: Validate proper heading hierarchy (H1 before H2, etc.)
+    rule_definition:
+      require_single_h1: true
+      require_sequence: true
+    examples:
+      - violation: "Document skips from H1 to H3"
+        correction: "Use proper sequence H1 -> H2 -> H3"
+
+  - id: font_size_consistency
+    name: Font Size Consistency
+    scope: formatting
+    severity: info
+    enabled: true
+    description: Check for consistent font sizes for same style elements
+    rule_definition:
+      tolerance_pt: 1
+    examples:
+      - violation: "Multiple headings with different sizes (14pt, 16pt)"
+        correction: "Use consistent size for all H1 headings"
+
+  - id: table_formatting
+    name: Table Formatting
+    scope: formatting
+    severity: warning
+    enabled: true
+    description: Validate table structure and formatting
+    rule_definition:
+      require_header_row: true
+      require_consistent_cols: true
+    examples:
+      - violation: "Table cells have inconsistent borders"
+        correction: "Apply consistent border formatting"
+
+  - id: list_formatting
+    name: List Formatting
+    scope: structure
+    severity: info
+    enabled: true
+    description: Check proper list formatting and indentation
+    rule_definition:
+      require_consistent_bullets: true
+      require_consistent_indentation: true
+    examples:
+      - violation: "Mix of bullet styles (-, *, •) in same list"
+        correction: "Use consistent bullet style"
+
+  - id: image_captions
+    name: Image Captions
+    scope: structure
+    severity: warning
+    enabled: true
+    description: Verify all images have descriptive captions
+    rule_definition:
+      require_captions: true
+      min_caption_length: 10
+    examples:
+      - violation: "Image without caption"
+        correction: "Add descriptive caption below image"
+
+  - id: cross_references
+    name: Cross References
+    scope: structure
+    severity: warning
+    enabled: true
+    description: Validate that cross-references are valid
+    rule_definition:
+      check_references: true
+    examples:
+      - violation: "Reference to 'Section 5' but only 4 sections exist"
+        correction: "Update reference or add missing section"
+
+  - id: numbering_consistency
+    name: Numbering Consistency
+    scope: structure
+    severity: info
+    enabled: true
+    description: Check consistent numbering format
+    rule_definition:
+      require_consistent_format: true
+    examples:
+      - violation: "Mix of numbering styles (1.1, 1.a, 1.i)"
+        correction: "Use consistent numbering format"
+
+language_rules:
+  - id: language_detection
+    name: Language Detection
+    scope: language
+    severity: info
+    enabled: true
+    description: Detect document language
+    rule_definition:
+      min_confidence: 0.7
+    examples:
+      - violation: "Language not detected with confidence"
+        correction: "Provide longer text sample for detection"
+
+structure_rules:
+  - id: document_structure
+    name: Document Structure
+    scope: structure
+    severity: warning
+    enabled: true
+    description: Validate basic document structure
+    rule_definition:
+      require_title: false
+      require_toc: false
+    examples:
+      - violation: "Document lacks clear title or introduction"
+        correction: "Add title and introduction section"

@@ -1,0 +1,122 @@
+# German Language-Specific Conventions
+
+language: de
+language_name: German
+
+quotation_marks:
+  - id: german_quotation_marks
+    name: German Quotation Marks
+    severity: warning
+    enabled: true
+    description: German documents should use „" for quotation marks, not ""
+    rules:
+      primary_open: "„"
+      primary_close: """
+      secondary_open: "‚"
+      secondary_close: "'"
+      avoid_marks: ["\"", "'"]
+    examples:
+      - violation: 'He said "Guten Morgen"'
+        correction: 'He said „Guten Morgen"'
+      - violation: "She said 'Auf Wiedersehen'"
+        correction: "She said ‚Auf Wiedersehen'"
+
+number_formatting:
+  - id: german_number_format
+    name: German Number Format
+    severity: warning
+    enabled: true
+    description: German uses comma for decimal separator and period for thousands
+    rules:
+      decimal_separator: ","
+      thousands_separator: "."
+      allow_space_thousands: true
+    examples:
+      - violation: "The value is 1,234.56"
+        correction: "The value is 1.234,56"
+      - violation: "Temperature: 23.5°C"
+        correction: "Temperature: 23,5°C"
+
+capitalization:
+  - id: german_noun_capitalization
+    name: Noun Capitalization
+    severity: warning
+    enabled: true
+    description: All German nouns must be capitalized
+    rules:
+      require_noun_caps: true
+      common_nouns: ["Document", "Tabelle", "Kapitel", "Abschnitt"]
+    examples:
+      - violation: "Das dokument enthält..."
+        correction: "Das Dokument enthält..."
+      - violation: "Eine tabelle mit daten..."
+        correction: "Eine Tabelle mit Daten..."
+
+  - id: german_title_capitalization
+    name: Title Capitalization
+    severity: info
+    enabled: true
+    description: German titles capitalize principal words
+    rules:
+      capitalize_first_word: true
+      capitalize_nouns: true
+      lowercase_articles: true
+    examples:
+      - violation: "kapittel 1: das erste kapitel"
+        correction: "Kapitel 1: Das erste Kapitel"
+
+umlauts:
+  - id: german_umlauts
+    name: German Umlaut Usage
+    severity: warning
+    enabled: true
+    description: Use proper German umlauts (ä, ö, ü) not substitutes (ae, oe, ue)
+    rules:
+      require_proper_umlauts: true
+      avoid_substitutes: ["ae", "oe", "ue"]
+    examples:
+      - violation: "Groesse und Schaetzen"
+        correction: "Größe und Schätzen"
+
+hyphenation:
+  - id: german_hyphenation
+    name: Hyphenation Rules
+    severity: info
+    enabled: true
+    description: Follow German hyphenation rules
+    rules:
+      allow_compound_words: true
+      check_word_breaks: true
+    examples:
+      - violation: "Dokumen-tation (split incorrectly)"
+        correction: "Doku-mentation or Dokumentation"
+
+spacing:
+  - id: german_spacing
+    name: Spacing Rules
+    severity: info
+    enabled: true
+    description: Proper spacing around punctuation
+    rules:
+      space_before_colons: false
+      space_before_semicolons: false
+      space_after_exclamation: true
+    examples:
+      - violation: "Das ist wichtig : sehr wichtig !"
+        correction: "Das ist wichtig: sehr wichtig!"
+
+terminology:
+  - id: german_terminology
+    name: Consistent Terminology
+    severity: warning
+    enabled: true
+    description: Use consistent German terminology
+    rules:
+      preferred_terms:
+        - original: "software"
+          preferred: "Software (or use German equivalent)"
+        - original: "computer"
+          preferred: "Computer (or use German equivalent)"
+    examples:
+      - violation: "Inconsistent use of 'Software' and 'software'"
+        correction: "Use consistent capitalization: 'Software'"

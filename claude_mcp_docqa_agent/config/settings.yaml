@@ -1,0 +1,79 @@
+# Document QA Agent Settings
+
+# Document Processing
+document_processing:
+  supported_formats: ["pdf", "docx"]
+  supported_languages: ["de", "zh_CN"]
+  max_file_size_mb: 100
+
+# Language Detection
+language_detection:
+  min_confidence: 0.7
+  default_language: null  # Auto-detect
+  allow_manual_override: true
+
+# Analysis Rules
+analysis:
+  # Formatting checks
+  check_font_consistency: true
+  check_heading_hierarchy: true
+  check_font_sizes: true
+  check_table_formatting: true
+  check_list_formatting: true
+  check_image_captions: true
+  check_cross_references: true
+  check_numbering: true
+
+  # Language-specific checks
+  check_german_conventions: true
+  check_chinese_conventions: true
+
+  # Style rule configuration
+  rule_files:
+    default: "default_rules.yaml"
+    german: "german_conventions.yaml"
+    chinese: "chinese_conventions.yaml"
+
+# Report Generation
+reporting:
+  generate_json: true
+  generate_html: true
+  generate_pdf: true
+  include_page_references: true
+  include_coordinates: true
+  include_examples: true
+
+  # Severity levels to include (empty = all)
+  severity_levels: ["critical", "warning", "info"]
+
+# MCP Server
+mcp:
+  host: "127.0.0.1"
+  port: 8000
+  timeout_seconds: 300
+  max_workers: 4
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  console_output: true
+  file_logging: true
+  log_dir: "logs"
+  rotation_size_mb: 500
+  retention_days: 7
+
+# Performance
+performance:
+  cache_results: true
+  cache_dir: "storage/cache"
+  parallel_processing: true
+  max_parallel_pages: 4
+
+# Quality Thresholds
+quality:
+  # Minimum confidence for language detection
+  min_language_confidence: 0.7
+
+  # Maximum allowed issues per document
+  max_critical_issues: 10
+  max_warning_issues: 50

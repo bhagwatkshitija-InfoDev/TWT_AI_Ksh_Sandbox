@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "claude-mcp-docqa-agent"
+version = "0.1.0"
+description = "Claude-based Document QA Agent for German and Chinese technical documentation"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    {name = "AI Engineer", email = "dev@example.com"}
+]
+license = {text = "MIT"}
+
+dependencies = [
+    "mcp>=1.0.0",
+    "anthropic>=0.25.0",
+    "python-docx==1.0.1",
+    "pdfplumber==0.11.0",
+    "pypdf==4.0.2",
+    "pdf2image==1.17.0",
+    "Pillow==10.1.0",
+    "langdetect==1.0.9",
+    "textblob==0.17.1",
+    "regex==2023.12.25",
+    "ftfy==6.1.1",
+    "unidecode==1.3.0",
+    "python-pinyin==0.51.0",
+    "sqlalchemy==2.0.23",
+    "alembic==1.13.1",
+    "reportlab==4.0.9",
+    "Jinja2==3.1.2",
+    "markupsafe==2.1.3",
+    "weasyprint==60.1",
+    "pydantic==2.5.0",
+    "pydantic-settings==2.1.0",
+    "pyyaml==6.0.1",
+    "python-dotenv==1.0.0",
+    "loguru==0.7.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==7.4.3",
+    "pytest-asyncio==0.23.2",
+    "pytest-cov==4.1.0",
+    "black==23.12.1",
+    "flake8==6.1.0",
+    "mypy==1.7.1",
+]
+
+[project.scripts]
+docqa = "claude_mcp_docqa_agent.main:cli"
+
+[tool.setuptools]
+packages = ["claude_mcp_docqa_agent"]
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+include = '\.pyi?$'
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "-v --cov=claude_mcp_docqa_agent --cov-report=term"

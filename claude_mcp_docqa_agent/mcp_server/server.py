@@ -5,7 +5,7 @@ from typing import Any
 
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
-from mcp.types import Tool, TextContent, ToolResult
+from mcp.types import Tool, TextContent
 
 from claude_mcp_docqa_agent.analysis.document_quality_analyzer import (
     DocumentQualityAnalyzer,
@@ -44,7 +44,7 @@ class DocumentQAServer:
 
         logger.info("Registered 6 tools")
 
-    async def _handle_tool(self, tool_name: str, tool_input: dict[str, Any]) -> ToolResult:
+    async def _handle_tool(self, tool_name: str, tool_input: dict[str, Any]) -> str:
         """Handle tool invocation."""
         logger.info(f"Tool invoked: {tool_name}")
 
@@ -64,12 +64,12 @@ class DocumentQAServer:
             else:
                 result = {"error": f"Unknown tool: {tool_name}"}
 
-            return ToolResult(content=[TextContent(type="text", text=json.dumps(result))])
+            return json.dumps(result)
 
         except Exception as e:
             logger.error(f"Tool error: {e}")
             error_result = {"error": str(e), "tool": tool_name}
-            return ToolResult(content=[TextContent(type="text", text=json.dumps(error_result))])
+            return json.dumps(error_result)
 
     def _get_upload_document_tool(self) -> Tool:
         """Get upload_document tool definition."""
